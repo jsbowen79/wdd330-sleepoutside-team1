@@ -4,6 +4,20 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  renderTotalPrice(cartItems);
+}
+
+function renderTotalPrice(cartList) {
+  const totalDisplay = document.querySelector(".cart-footer");
+  const totalText = document.querySelector(".cart-total");
+  let total = 0;
+  cartList.forEach((item) => {
+    total += item.FinalPrice;
+  });
+  if (total != 0) {
+    totalText.innerHTML += `$${Math.round(total * 100) / 100}`;
+    totalDisplay.style.display = "block";
+  }
 }
 
 function cartItemTemplate(item) {
