@@ -15,8 +15,8 @@ function renderTotalPrice(cartList) {
     total += item.FinalPrice;
   });
   if (total != 0) {
-    totalText.innerHTML += `$${Math.round(total * 100) / 100}`;
-    totalDisplay.style.display = "block";
+    totalText.innerHTML = `Total: $${total.toFixed(2)}`;
+    totalDisplay.classList.remove("hide");
   }
 }
 
