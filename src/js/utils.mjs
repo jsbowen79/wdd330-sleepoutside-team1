@@ -22,6 +22,15 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener('click', callback);
 }
 
+//retrieve parameters from URL
+
+export function getParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const product = urlParams.get(param).replace(".html", "") || urlParams.get(param);
+  return product;
+}
+
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlStrings = list.map(templateFn);
   if (clear == true) {
