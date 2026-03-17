@@ -46,4 +46,4 @@ export default class ProductDetails {
         qs('#addToCart').dataset.id = this.product.Id;
 
     }
-}
+  }
