@@ -16,11 +16,10 @@ export default class ProductList {
         this.dataSource = dataSource;
         this.listElement = listElement;
     }
-    async renderList(list) {
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
+    renderList(productList) {
+        renderListWithTemplate(productCardTemplate, this.listElement, this.dataSource);
     }
     async init() {
-        const list = await this.dataSource.getData();
-        this.renderList(list);
+        this.renderList(this);
     }
 }

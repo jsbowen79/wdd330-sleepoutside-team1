@@ -25,8 +25,8 @@ export function setClick(selector, callback) {
 //retrieve parameters from URL
 
 export function getParam(param) {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
+  const queryString = window.location.search || '?category=tents';
+  const urlParams = new URLSearchParams(queryString); 
   const product = urlParams.get(param).replace(".html", "") || urlParams.get(param);
   return product;
 }
