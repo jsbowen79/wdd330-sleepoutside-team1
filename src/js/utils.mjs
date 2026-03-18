@@ -1,3 +1,5 @@
+
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -42,6 +44,7 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 export function renderWithTemplate(template, parentElement, data = null, callback = null) {
   // console.log (`Element: ${parentElement}, template: ${template}, data: ${data}, callback: ${callback} `)
   parentElement.innerHTML = template;
+
   if (callback) {
     callback(data);
   }

@@ -1,63 +1,83 @@
 import { renderWithTemplate } from "./utils.mjs";
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 
 function shoppingCartTemplate(product) {
-    
     return `<li class='cart-card divider'>
-    <a href='#' class='cart-card__image'>
+    <a href='/product_pages/?Id=665HD' class='cart-card__image'>
       <img
-        src='${product.Image}'
+        src='${product.Images.PrimarySmall}'
         alt='${product.Name}'
       />
     </a>
-    <a href='#'>
+    <a href='/product_pages/?Id=665HD'>
       <h2 class='card__name'>${product.Name}</h2>
     </a>
     <p class='cart-card__color'>${product.Colors[0].ColorName}</p>
     <p class='cart-card__quantity'>qty: 1</p>
     <p class='cart-card__price'>$${product.FinalPrice}</p>
+    <div class='deleteButton'>
+    <span>❌</span>
+    <p class='extractId' hidden>${product.Id}</p>
+    </div>
   </li>`;
     
 }
 
 function renderTotalPrice(cartList) {
-    const totalDisplay = document.querySelector(".cart-footer");
-    const totalText = document.querySelector(".cart-total");
-    let total = 0;
-    cartList.forEach((item) => {
-      total += item.FinalPrice;
-    });
-    if (total != 0) {
-      totalText.innerHTML = `Total: $${total.toFixed(2)}`;
-      totalDisplay.classList.remove("hide");
-    }
-}
-
-export default class ShoppingCartList {
+  const totalDisplay = document.querySelector(".cart-footer");
+  const totalText = document.querySelector(".cart-total");
+  const deleteEL = document.querySelector('.cartHeader p'); 
+  deleteEL.classList.add('hide'); 
+  totalText.innerHTML = 'There are no Items in your Cart!'; 
+  let total = 0;
+  cartList.forEach((item) => {
+    total += item.FinalPrice;
+  });
+  if (total != 0) {
+    totalText.innerHTML = `Total: $${total.toFixed(2)}`;
+    deleteEL.classList.remove('hide'); 
+  }
+  }
+  
+  
+  export default class ShoppingCartList {
     constructor(purchaseList, cartElement) {
-        this.purchaseList = purchaseList; 
-        this.cartElement = cartElement; 
+      this.purchaseList = purchaseList; 
+      this.cartElement = cartElement; 
     }
-
+    
     renderCart(shoppingCartList) {
-        console.log('inside renderCart');
-        let template; 
-
-        shoppingCartList.purchaseList.forEach((product) => {
-            template += shoppingCartTemplate(product); 
-            console.log(`template: ${template}`); 
-        })
-        renderWithTemplate(template, shoppingCartList.cartElement); 
+      let template= []; 
+      
+      shoppingCartList.purchaseList.forEach((product) => {
+        template += shoppingCartTemplate(product); 
+      })
+      renderWithTemplate(template, shoppingCartList.cartElement); 
+      this.activateDeleteButtons(); 
     }
-     
+    
+    activateDeleteButtons() {
+      const productListEL = document.querySelector('.product-list'); 
+      const deleteELNodes = document.querySelectorAll('.deleteButton span'); 
+      deleteELNodes.forEach((node) => {
+        node.addEventListener('click', () => {
+          productListEL.innerHTML = ''; 
+          const id = node.nextElementSibling.textContent;
+          const shoppingCartList = getLocalStorage('so-cart'); 
+          const newList = shoppingCartList.filter(product => product.Id !== id); 
+          setLocalStorage('so-cart', newList); 
+          const newShoppingCartList = new ShoppingCartList(newList, productListEL)
+          newShoppingCartList.init();       
+        })
+      })
+      
+    }
       
     async init() {
-        if (this.purchaseList) {
+        
             this.renderCart(this); 
             renderTotalPrice(this.purchaseList);
-          } else {
-            document.querySelector('.product-list').textContent ="There are no items in your cart!";
-          }
-    }
+  }
+  
 }
