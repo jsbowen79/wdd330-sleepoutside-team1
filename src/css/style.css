@@ -151,9 +151,27 @@ button {
   text-align: center;
 }
 
+/* Category Grid */
 .products {
   margin-top: 2rem;
   padding: 1rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  text-align: center;
+}
+
+.category-grid img {
+  width: auto;
+  max-width: 100px;
+  margin: 0 auto;
+}
+
+.category-grid h2 {
+  font-size: 20px;
 }
 
 .product-list {

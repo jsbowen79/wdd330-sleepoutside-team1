@@ -1,6 +1,4 @@
-
 import { setLocalStorage, getLocalStorage, qs } from "./utils.mjs";
-
 
 export default class ProductDetails {
     constructor(productId, dataSource) {
@@ -17,7 +15,7 @@ export default class ProductDetails {
             .addEventListener('click', this.addProductToCart.bind(this));
     }
 
-    addProductToCart(product) {
+    addProductToCart() {
         const productsArray = getLocalStorage("so-cart") || [];
         productsArray.push(this.product);
         setLocalStorage("so-cart", productsArray);
@@ -34,8 +32,8 @@ export default class ProductDetails {
         
         productBrandEl.textContent = this.product.Brand.Name; 
         productNameEL.textContent = this.product.NameWithoutBrand; 
-        productImageEL.src = this.product.Image; 
-        productImageEL.alt = this.product.NameWithoutBrand; 
+        productImageEL.src = this.product.Images.PrimaryExtraLarge; 
+        productImageEL.alt = this.product.Name; 
         priceEL.textContent = `$${this.product.ListPrice}`; 
         colorEL.textContent = this.product.Colors[0].ColorName; 
 
