@@ -34,7 +34,7 @@ export default class ProductDetails {
         
         productBrandEl.textContent = this.product.Brand.Name; 
         productNameEL.textContent = this.product.NameWithoutBrand; 
-        productImageEL.src = this.product.Image; 
+        productImageEL.src = this.product.Images.PrimaryLarge; 
         productImageEL.alt = this.product.NameWithoutBrand; 
         priceEL.textContent = `$${this.product.ListPrice}`; 
         colorEL.textContent = this.product.Colors[0].ColorName; 

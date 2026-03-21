@@ -1,3 +1,5 @@
+
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -25,10 +27,10 @@ export function setClick(selector, callback) {
 //retrieve parameters from URL
 
 export function getParam(param) {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param).replace(".html", "") || urlParams.get(param);
-  return product;
+  const queryString = window.location.search || '?category=tents';
+  const urlParams = new URLSearchParams(queryString); 
+  return urlParams.get(param).replace(".html", "") || urlParams.get(param);
+
 }
 
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
@@ -42,6 +44,7 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 export function renderWithTemplate(template, parentElement, data = null, callback = null) {
   // console.log (`Element: ${parentElement}, template: ${template}, data: ${data}, callback: ${callback} `)
   parentElement.innerHTML = template;
+
   if (callback) {
     callback(data);
   }
