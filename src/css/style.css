@@ -241,6 +241,20 @@ button {
   grid-column: 3;
 }
 
+/* Total in Cart */
+.cart-footer {
+  max-width: 880px;
+  margin-top: 10px;
+}
+
+.cart-total {
+  text-align: right;
+}
+
+.hide {
+  display: none;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
