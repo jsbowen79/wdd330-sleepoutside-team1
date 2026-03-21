@@ -1,49 +1,48 @@
-
-import { setLocalStorage, getLocalStorage, qs } from "./utils.mjs";
-
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
-    constructor(productId, dataSource) {
-        this.productId = productId;
-        this.product = [];
-        this.dataSource = dataSource;
-    }
+  constructor(productId, dataSource) {
+    this.productId = productId;
+    this.product = {};
+    this.dataSource = dataSource;
+  }
 
-    async init() {
-        this.product = await this.dataSource.findProductById(this.productId);
-        this.RenderProductDetails();
-        document
-            .getElementById('addToCart')
-            .addEventListener('click', this.addProductToCart.bind(this));
-    }
+  async init() {
+    this.product = await this.dataSource.findProductById(this.productId);
+    this.renderProductDetails();
 
-    addProductToCart(product) {
-        const productsArray = getLocalStorage("so-cart") || [];
-        productsArray.push(this.product);
-        setLocalStorage("so-cart", productsArray);
-    }
+    document
+      .getElementById("addToCart")
+      .addEventListener("click", this.addToCart.bind(this));
+  }
 
-    RenderProductDetails() {
+  addToCart() {
+    let productsArray = getLocalStorage("so-cart") || [];
+    productsArray.push(this.product);
+    setLocalStorage("so-cart", productsArray);
+  }
 
-        const productBrandEl = qs('h3');
-        const productNameEL = qs('h2');
-        const productImageEL = qs('#productImage');
-        const priceEL = qs('.product-card__price');
-        const colorEL = qs('.product__color');
-        const longProductDescriptionEL = qs('.product__description');
-        
-        productBrandEl.textContent = this.product.Brand.Name; 
-        productNameEL.textContent = this.product.NameWithoutBrand; 
-        productImageEL.src = this.product.Image; 
-        productImageEL.alt = this.product.NameWithoutBrand; 
-        priceEL.textContent = `$${this.product.ListPrice}`; 
-        colorEL.textContent = this.product.Colors[0].ColorName; 
+  renderProductDetails() {
+    const productSection = document.querySelector(".product-detail");
 
-        const temp = document.createElement('div');
-        temp.innerHTML = this.product.DescriptionHtmlSimple; 
-        longProductDescriptionEL.textContent = temp.textContent; 
-
-        qs('#addToCart').dataset.id = this.product.Id;
-
-    }
+    productSection.innerHTML = `
+      <img
+        class="divider"
+        src="${this.product.Image}"
+        alt="${this.product.Name}"
+      />
+      <div>
+        <h3>${this.product.Brand.Name}</h3>
+        <h2>${this.product.NameWithoutBrand}</h2>
+        <p class="product-card__price">$${this.product.FinalPrice}</p>
+        <p class="product__color">${this.product.Colors[0].ColorName}</p>
+        <p class="product__description">
+          ${this.product.DescriptionHtmlSimple}
+        </p>
+        <div class="product-detail__add">
+          <button id="addToCart">Add to Cart</button>
+        </div>
+      </div>
+    `;
+  }
 }
