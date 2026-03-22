@@ -1,3 +1,4 @@
+const list = await this.dataSource.getData(this.category);
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
