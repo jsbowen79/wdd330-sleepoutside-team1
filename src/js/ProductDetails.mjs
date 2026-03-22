@@ -19,7 +19,14 @@ export default class ProductDetails {
 
     addProductToCart(product) {
         const productsArray = getLocalStorage("so-cart") || [];
-        productsArray.push(this.product);
+        if (productsArray.find((item) => item.Id === this.productId)) {
+            let i = productsArray.findIndex((item) => item.Id === this.productId)
+                productsArray[i].Quantity += 1;
+                console.log('duplicate');
+            } else {
+                this.product.Quantity = 1;
+                productsArray.push(this.product);
+            }
         setLocalStorage("so-cart", productsArray);
     }
 
@@ -31,17 +38,17 @@ export default class ProductDetails {
         const priceEL = qs('.product-card__price');
         const colorEL = qs('.product__color');
         const longProductDescriptionEL = qs('.product__description');
-        
-        productBrandEl.textContent = this.product.Brand.Name; 
-        productNameEL.textContent = this.product.NameWithoutBrand; 
-        productImageEL.src = this.product.Images.PrimaryLarge; 
-        productImageEL.alt = this.product.NameWithoutBrand; 
-        priceEL.textContent = `$${this.product.ListPrice}`; 
-        colorEL.textContent = this.product.Colors[0].ColorName; 
+
+        productBrandEl.textContent = this.product.Brand.Name;
+        productNameEL.textContent = this.product.NameWithoutBrand;
+        productImageEL.src = this.product.Images.PrimaryLarge;
+        productImageEL.alt = this.product.NameWithoutBrand;
+        priceEL.textContent = `$${this.product.ListPrice}`;
+        colorEL.textContent = this.product.Colors[0].ColorName;
 
         const temp = document.createElement('div');
-        temp.innerHTML = this.product.DescriptionHtmlSimple; 
-        longProductDescriptionEL.textContent = temp.textContent; 
+        temp.innerHTML = this.product.DescriptionHtmlSimple;
+        longProductDescriptionEL.textContent = temp.textContent;
 
         qs('#addToCart').dataset.id = this.product.Id;
 
