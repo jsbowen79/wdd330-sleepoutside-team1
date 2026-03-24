@@ -8,7 +8,7 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   constructor() {
   }
 
@@ -32,6 +32,7 @@ export default class ProductData {
   }
 
   async submitOrder(order) {
+    console.log("order " + order); 
     const options = {
       method: "POST",
       headers: {
@@ -39,7 +40,9 @@ export default class ProductData {
       },
       body: JSON.stringify(order)
     };
-    return await fetch(`${baseURL}checkout/`, options).then(convertToJson)
+    console.log(JSON.stringify(order, null, 2));
+
+    return await fetch(`${baseURL}checkout`, options).then(convertToJson)
   
   }
 }

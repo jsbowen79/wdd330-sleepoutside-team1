@@ -43,7 +43,7 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 
 export function renderWithTemplate(template, parentElement, data = null, callback = null) {
   // console.log (`Element: ${parentElement}, template: ${template}, data: ${data}, callback: ${callback} `)
-  parentElement.innerHTML = template;
+  parentElement.innerHTML += template;
 
   if (callback) {
     callback(data);

@@ -8,7 +8,7 @@
 
     <title>Sleep Outside | Checkout</title>
     <script src="../js/checkout.js" type="module"></script>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
 
   <body>
@@ -17,51 +17,92 @@
     <main class="divider">
       <section class="cartHeader">
         <h2>Review & Place your Order</h2>
-        <div class="product-list">Your Order: </div>
-        <div class="cart-footer">
-          <div id="subtotal" class="checkout cart-total"></div>
-          <div id="tax" class="checkout">Tax</div>
-          <div id="shipping" class="checkout">Estimated Shipping: </div>
-          <div id="total" class="checkout">Total: </div>
-        </div>
+        <form id="orderForm" action="./confirmation.html" method="get">
+          <fieldset class="checkoutSummary">
+            <legend>Checkout Summary</legend>
+              <table>
+                <caption> Your Order</caption>
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+              </table> 
 
 
-        <form class="orderForm" action="./confirmation.html" method="get">
-          <h2>Personal Information</h2>
-          <label for="fname">First Name: </label>
-          <input type="text" autocomplete="on" id="fname" name="fname" placeholder="First Name (John)" required>
-          <label for="lname">Last Name: </label>
-          <input type="text" autocomplete="on" id="lname" name="lname" placeholder="Last Name (Doe)" required>
-          <label for="street">Street Address: </label>
-          <input type="text" autocomplete="on" id="street" name="address" placeholder="123 My Street" required>
-          <label for="city">City: </label>
-          <input type="text" autocomplete="on" id="city" name="city" placeholder="My City" required>
-          <label for="state">State: </label>
-          <input type="text" autocomplete="on" id="state" name="state" placeholder="My State" required>
-          <label for="zip">Zip Code: </label>
-          <input type="text" autocomplete="on" id="zip" name="zip" placeholder="12345" pattern="[0-9]{5}">
-          <h2>Payment Information</h2>
-          <label for="ccnum">Credit Card Number: </label>
-          <input type="text" 
-                 id="ccnum" 
-                 name="ccnum" 
-                 placeholder="Number on Card" 
-                 pattern="\d{14,19}" 
-                 inputmode="numeric"
-                 minLength="14"
-                 maxlength="19"
-                 required>
-          <label for="expire">Expiration Date: </label>
-          <input type="date" id="expire" name="expire" required>
-          <label for="code">CCV Code: </label>
-          <input type="text"
-                 id="code"
-                 name="code"
-                 pattern="\d{3,4}"
-                 inputmode="numeric"
-                 minlength="3"
-                 maxlength="4"
-                 required>
+            <div class="cart-footer">
+              <table>
+                <tr class="subtotal">
+                  <td id="subtotalText" class="subtotal">SubTotal: </td>
+                  <td id="subtotal" class="subtotal"></td>
+                </tr>
+                <tr>
+                  <td id="taxText" class="checkout">Tax:</td>
+                  <td id="tax"></td>
+                </tr>
+                <tr>
+                  <td id="shippingText" class="checkout">Estimated Shipping Charges: </td>
+                  <td id="shipping"></td>
+                </tr>
+                <tr class="total">
+                  <td id="totalText" class="total">Order Total: </td>
+                  <td id="total" class="total"></td>
+                </tr>
+                </table>
+            </div>
+          </fieldset>
+
+          <fieldset class="personalInfo">
+            <legend>Personal Information</legend>
+            <label for="fname">First Name: </label>
+            <input type="text" autocomplete="on" id="fname" name="fname" placeholder="First Name (John)" required>
+            <label for="lname">Last Name: </label>
+            <input type="text" autocomplete="on" id="lname" name="lname" placeholder="Last Name (Doe)" required>
+            <label for="street">Street Address: </label>
+            <input type="text" autocomplete="on" id="street" name="address" placeholder="123 My Street" required>
+            <label for="city">City: </label>
+            <input type="text" autocomplete="on" id="city" name="city" placeholder="My City" required>
+            <label for="state">State: </label>
+            <input type="text" autocomplete="on" id="state" name="state" placeholder="My State" required>
+            <label for="zip">Zip Code: </label>
+            <input type="text" autocomplete="on" id="zip" name="zip" placeholder="12345" pattern="[0-9]{5}">
+          </fieldset>
+          <fieldset class="paymentInfo">
+            <legend>Payment Information</legend>
+            <label for="ccnum">Credit Card Number: </label>
+            <input type="text" 
+            id="ccnum" 
+            name="ccnum" 
+            placeholder="Number on Card" 
+            pattern="\d{14,19}" 
+            inputmode="numeric"
+            minLength="14"
+            maxlength="19"
+            value="1234123412341234"
+            required>
+            <label for="expire">Expiration Date: (M/YY) (e.g., 8/21)</label>
+            <input type="text" 
+            value="8/29" 
+            id="expire" 
+            name="expire" 
+            pattern="^(0?[1-9]|1[0-2])\/\d{2}$"
+            required>
+            <label for="code">CCV Code: </label>
+            <input type="text"
+            id="code"
+            name="code"
+            pattern="\d{3,4}"
+            inputmode="numeric"
+            minlength="3"
+            maxlength="4"
+            value="123"
+            required>
+          </fieldset>
+          <button type="submit" id="submit">Place Your Order</button>
         </form>
 
 
