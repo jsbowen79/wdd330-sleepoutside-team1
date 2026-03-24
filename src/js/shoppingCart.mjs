@@ -24,11 +24,11 @@ function shoppingCartTemplate(product) {
 
 }
 
-function renderTotalPrice(cartList) {
+export function renderTotalPrice(cartList) {
   const totalDisplay = document.querySelector(".cart-footer");
   const totalText = document.querySelector(".cart-total");
   const deleteEL = document.querySelector('.cartHeader p');
-  deleteEL.classList.add('hide');
+  const checkoutEL = document.createElement("a"); 
   totalText.innerHTML = 'There are no Items in your Cart!';
   let total = 0;
   cartList.forEach((item) => {
@@ -37,7 +37,11 @@ function renderTotalPrice(cartList) {
   });
   if (total != 0) {
     totalText.innerHTML = `Total: $${total.toFixed(2)}`;
-    deleteEL.classList.remove('hide');
+    checkoutEL.classList.add('checkout'); 
+    checkoutEL.href=('/checkout/index.html')
+    checkoutEL.innerHTML = "<button class='checkout'>Purchase Now</button>";
+
+    totalDisplay.appendChild(checkoutEL); 
   }
 }
 

@@ -30,4 +30,16 @@ export default class ProductData {
     // const products = await this.getData();
     // return products.find((item) => item.Id === id);
   }
+
+  async submitOrder(order) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order)
+    };
+    return await fetch(`${baseURL}checkout/`, options).then(convertToJson)
+  
+  }
 }
