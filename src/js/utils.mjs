@@ -71,7 +71,7 @@ export function alertMessage(message, scroll=true) {
   alertEL.appendChild(messageEl); 
   alertEL.appendChild(closeEL);
   closeEL.textContent = "X"; 
-  messageEl.textContent = "Error: " + message; 
+  messageEl.textContent = message; 
   alertEL.addEventListener("click", function () {
     alertEL.remove(); 
   })
