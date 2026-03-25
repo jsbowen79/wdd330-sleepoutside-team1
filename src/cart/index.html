@@ -17,18 +17,25 @@
     <header class="divider" id="mainHeader"></header>
 
     <main class="divider">
-      <section class="products">
-        <div class="cartHeader">
-          <h2>My Cart</h2>
-          <p class="hide">Remove</p>
-        </div>
+      <section id="products">
+        <table>
+          <caption>
+            My Shopping Cart
+          </caption>
+          <thead>
+            <tr>
+              <th id="cartImage">Image</th>
+              <th id="cartName">Name</th>
+              <th id="cartColor">Color</th>
+              <th id="cartQuantity">Quantity</th>
+              <th id="cartPrice">Price</th>
+              <th id="cartDelete">Delete</th>
+            </tr>
+          </thead>
+          <tbody class="cartTBody"></tbody>
+        </table>
 
-        <ul class="product-list">
-      
-        </ul>
-        <div class="cart-footer">
-          <p class="cart-total"></p>
-        </div>
+        <div class="cart-footer"></div>
       </section>
     </main>
 
