@@ -1,6 +1,5 @@
 import { renderWithTemplate } from "./utils.mjs";
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
-console.log('In shoppingCart.MJS'); 
 
 function shoppingCartTemplate(product) {
   return `<tr>

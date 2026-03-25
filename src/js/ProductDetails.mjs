@@ -1,5 +1,5 @@
 
-import { setLocalStorage, getLocalStorage, qs } from "./utils.mjs";
+import { alertMessage, setLocalStorage, getLocalStorage, qs } from "./utils.mjs";
 
 
 export default class ProductDetails {
@@ -22,12 +22,12 @@ export default class ProductDetails {
         if (productsArray.find((item) => item.Id === this.productId)) {
             let i = productsArray.findIndex((item) => item.Id === this.productId)
                 productsArray[i].Quantity += 1;
-                console.log('duplicate');
             } else {
                 this.product.Quantity = 1;
                 productsArray.push(this.product);
             }
         setLocalStorage("so-cart", productsArray);
+        alertMessage(`${this.product.Name} has been added to your cart.`); 
     }
 
     RenderProductDetails() {

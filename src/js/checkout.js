@@ -2,26 +2,23 @@ import { loadHeaderFooter } from "./utils.mjs";
 import CheckoutProcess from "./CheckoutProcess.mjs";
 
 loadHeaderFooter();
-const checkout = new CheckoutProcess;
-const zipEL = document.querySelector("#zip"); 
-const sendPurchaseEl = document.querySelector('#submit');
+const checkout = new CheckoutProcess();
+const zipEL = document.querySelector("#zip");
+const sendPurchaseEl = document.querySelector("#submit");
 
 zipEL.addEventListener("input", checkout.updateTotals.bind(checkout));
 zipEL.addEventListener("change", checkout.updateTotals.bind(checkout));
 sendPurchaseEl.addEventListener("click", (e) => {
-    e.preventDefault(); 
-    checkout.calculateTotalWithTax(); 
-    checkout.createOrder(); 
-} )
+  const form = document.getElementById("orderForm");
+  e.preventDefault();
+  if (form.checkValidity()) {
+    checkout.calculateTotalWithTax();
+    checkout.createOrder();
+  } else {
+    form.reportValidity();
+  }
+});
 
-
-checkout.displayOrderSummary(); 
-checkout.setExpireRequirement();  
-checkout.displaySubtotal(); 
-
-
-
-
-
-
-
+checkout.displayOrderSummary();
+checkout.setExpireRequirement();
+checkout.displaySubtotal();

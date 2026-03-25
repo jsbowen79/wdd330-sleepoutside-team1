@@ -2,16 +2,14 @@ import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { loadHeaderFooter, getParam } from "./utils.mjs";
 
-const titleEL = document.querySelector('.products h2'); 
+const titleEL = document.querySelector(".products h2");
 const listElement = document.querySelector(".product-list");
-const category = getParam("category") || "tents"; 
-const capitalizedCategory = category => (category[0].toUpperCase() + category.slice(1)).toString(); 
-titleEL.innerHTML = `Top Products: ${capitalizedCategory(category)}`; 
-const projectData = new ExternalServices(); 
-const source = await projectData.getData(category); 
-console.log(source); 
+const category = getParam("category") || "tents";
+const capitalizedCategory = (cat) => cat[0].toUpperCase() + category.slice(1);
+titleEL.innerHTML = `Top Products: ${capitalizedCategory(category)}`;
+const projectData = new ExternalServices();
+const source = await projectData.getData(category);
 const productList = new ProductList(source, listElement);
-
 
 loadHeaderFooter();
 productList.init();

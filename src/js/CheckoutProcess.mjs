@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { alertMessage, getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { renderTotalPrice } from "./shoppingCart.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
@@ -101,9 +101,14 @@ export default class CheckoutProcess {
 
     async checkout(order) {
         const service = new ExternalServices(); 
-
-        const result = await service.submitOrder(order); 
-        console.log('result= ' + result)
+        try {
+            const result = await service.submitOrder(order); 
+            window.location.href = 'success.html'; 
+            // setLocalStorage('so-cart', ""); 
+            console.log('result= ' + result)
+        } catch (err) {
+            alertMessage(err.message); 
+        }
     }
 
 

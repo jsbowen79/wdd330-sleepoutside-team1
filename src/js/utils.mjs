@@ -42,7 +42,6 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 }
 
 export function renderWithTemplate(template, parentElement, data = null, callback = null) {
-  // console.log (`Element: ${parentElement}, template: ${template}, data: ${data}, callback: ${callback} `)
   parentElement.innerHTML += template;
 
   if (callback) {
@@ -65,5 +64,23 @@ export async function loadHeaderFooter() {
   renderWithTemplate(footerTemplate, footerEL); 
 }
 
+export function alertMessage(message, scroll=true) {
+  const alertEL = document.createElement('div'); 
+  const messageEl = document.createElement('p'); 
+  const closeEL = document.createElement('button'); 
+  alertEL.appendChild(messageEl); 
+  alertEL.appendChild(closeEL);
+  closeEL.textContent = "X"; 
+  messageEl.textContent = "Error: " + message; 
+  alertEL.addEventListener("click", function () {
+    alertEL.remove(); 
+  })
+  const mainEL = document.querySelector('main'); 
+  mainEL.prepend(alertEL); 
+  if (scroll) {
+    window.scrollTo(0, 0); 
+  }
 
+  alertEL.classList.add('alert'); 
+}
 

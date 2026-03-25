@@ -1,10 +1,14 @@
 const baseURL = import.meta.env.VITE_SERVER_URL; 
 
-function convertToJson(res) {
+async function convertToJson(res) {
+  const response = await res.json(); 
   if (res.ok) {
-    return res.json();
+    return response;
   } else {
-    throw new Error("Bad Response");
+    const errorMessage = typeof response === 'object'
+      ? JSON.stringify(response)
+      : String(response); 
+    throw {name: 'ExternalServicesError', message: errorMessage};
   }
 }
 
@@ -22,13 +26,8 @@ export default class ExternalServices {
 
   async findProductById(id) {
     const response = await fetch(`${baseURL}product/${id}`);
-    console.log(response); 
     const data = await convertToJson(response);
-    console.log(data); 
     return data.Result
-    // product = await this.dataSource.findProductById(this.productId);
-    // const products = await this.getData();
-    // return products.find((item) => item.Id === id);
   }
 
   async submitOrder(order) {
