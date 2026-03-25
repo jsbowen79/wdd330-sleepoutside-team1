@@ -252,7 +252,6 @@ button {
   grid-column: 3;
 }
 
-<<<<<<< HEAD
 
 .search-box {
   margin: 1rem 0;
@@ -265,20 +264,6 @@ button {
   border: 1px solid var(--light-grey);
   font-size: 1rem;
   display: block;
-=======
-/* Total in Cart */
-.cart-footer {
-  max-width: 880px;
-  margin-top: 10px;
-}
-
-.cart-total {
-  text-align: right;
-}
-
-.hide {
-  display: none;
->>>>>>> 5fbf800b7b90b40a85734668cad3f5e27b36b00a
 }
 
 @media screen and (min-width: 500px) {
