@@ -4,10 +4,10 @@ import ExternalServices from "./ExternalServices.mjs";
 
 
 const checkoutList = getLocalStorage("so-cart");
-const count = countItems(checkoutList); 
-let total; 
-let tax; 
-let shippingCost; 
+const count = countItems(checkoutList);
+let total;
+let tax;
+let shippingCost;
 export default class CheckoutProcess {
 
     displayOrderSummary() {
@@ -20,61 +20,61 @@ export default class CheckoutProcess {
             <td class='cart-card__price'>$${(product.FinalPrice *
                     product.Quantity).toFixed(2)}</td>
             </tr>`
-        } 
-        const tableEL = document.querySelector('#tbody'); 
-        let tbodyHTML = ''; 
+        }
+        const tableEL = document.querySelector('#tbody');
+        let tbodyHTML = '';
         checkoutList.forEach((product) => {
             tbodyHTML += checkoutTemplate(product);
-        }); 
-        tableEL.innerHTML = tbodyHTML; 
+        });
+        tableEL.innerHTML = tbodyHTML;
     }
 
     updateTotals() {
         const checkout = new CheckoutProcess;
-        const zipEL = document.querySelector("#zip"); 
+        const zipEL = document.querySelector("#zip");
         if (zipEL.validity.valid) {
             checkout.calculateTotalWithTax();
         }
     }
-    
-    
+
+
     setExpireRequirement() {
         const currentDate = new Date();
         const expireEL = document.querySelector('#expire');
         expireEL.min = currentDate;
     }
-    
+
     displaySubtotal() {
         const subtotalEL = document.querySelector('#subtotal');
         renderTotalPrice(checkoutList);
     }
-    
+
     calculateTotalWithTax() {
-        const taxEL = document.querySelector('#tax'); 
-        const shippingEL = document.querySelector('#shipping'); 
-        const totalEL = document.querySelector("#total"); 
-        const subtotal = Number(document.querySelector('#subtotal').textContent.substring(1)); 
-        
+        const taxEL = document.querySelector('#tax');
+        const shippingEL = document.querySelector('#shipping');
+        const totalEL = document.querySelector("#total");
+        const subtotal = Number(document.querySelector('#subtotal').textContent.substring(1));
+
         tax = (subtotal * .06);
-        shippingCost =10 + (2 * (count - 1)); 
-        total = Number(subtotal) + Number(tax) + Number(shippingCost); 
+        shippingCost = 10 + (2 * (count - 1));
+        total = Number(subtotal) + Number(tax) + Number(shippingCost);
 
-        taxEL.textContent = `$${tax.toFixed(2)}`; 
-        shippingEL.textContent = `$${shippingCost.toFixed(2)}`; 
-        totalEL.textContent = `$${total.toFixed(2)}`; 
+        taxEL.textContent = `$${tax.toFixed(2)}`;
+        shippingEL.textContent = `$${shippingCost.toFixed(2)}`;
+        totalEL.textContent = `$${total.toFixed(2)}`;
 
-       
-       
+
+
     }
     createOrder() {
-        const itemsList = getLocalStorage("so-cart"); 
-        const orderDate = new Date().toISOString(); 
-        console.log(document.querySelector('#total')); 
-        console.log(document.querySelector('#shipping')); 
+        const itemsList = getLocalStorage("so-cart");
+        const orderDate = new Date().toISOString();
+        console.log(document.querySelector('#total'));
+        console.log(document.querySelector('#shipping'));
         console.log(document.querySelector('#tax'));
-        console.log(document.querySelector('#total').textContent); 
-        console.log(document.querySelector('#shipping').textContent); 
-        console.log(document.querySelector('#tax').textContent); 
+        console.log(document.querySelector('#total').textContent);
+        console.log(document.querySelector('#shipping').textContent);
+        console.log(document.querySelector('#tax').textContent);
         const order = {
             orderDate,
             fname: document.querySelector("#fname").value,
@@ -96,28 +96,42 @@ export default class CheckoutProcess {
             shipping: Number(shippingCost),
             tax: Number(tax.toFixed(2))
         };
-        this.checkout(order); 
+        this.checkout(order);
     }
 
     async checkout(order) {
-        const service = new ExternalServices(); 
+        const service = new ExternalServices();
         try {
-            const result = await service.submitOrder(order); 
-            window.location.href = '../checkout/success.html'; 
-            // setLocalStorage('so-cart', ""); 
+            const result = await service.submitOrder(order);
+            window.location.href = '../checkout/success.html';
             console.log('result= ' + result)
         } catch (err) {
-            alertMessage(err.message); 
+            alertMessage(err.message);
         }
     }
 
+    checkForValidation() {
+        const cardNumber = document.getElementById("ccnum");
+        const expDate = document.getElementById("expire");
+        const ccvCode = document.getElementById("code");
+
+        if (!cardNumber.checkValidity()) {
+            alertMessage("Invalid Card Number")
+        }
+        if (!expDate.checkValidity()) {
+            alertMessage("Invalid Expiration Date")
+        }
+        if (!ccvCode.checkValidity()) {
+            alertMessage("Invalid Code")
+        }
+    }
 
 }
-function countItems(checkoutList) {
-    let count = 0; 
-    checkoutList.forEach(product => {
-        count += product.Quantity; 
-    });
-    return count; 
 
+function countItems(checkoutList) {
+    let count = 0;
+    checkoutList.forEach(product => {
+        count += product.Quantity;
+    });
+    return count;
 }

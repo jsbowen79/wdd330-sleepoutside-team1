@@ -208,10 +208,11 @@ button {
   padding: 1rem;
 }
 #products {
+  margin: 1rem .5rem;
   table {
     border-collapse: collapse;
     border-spacing: 0 10px;
-    margin: 5px;
+    margin: 5px auto;
     .subtotal td,
     tr.subtotal {
       border-top: 2px double red;

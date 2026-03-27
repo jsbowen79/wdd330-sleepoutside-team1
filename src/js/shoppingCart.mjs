@@ -60,18 +60,22 @@ export default class ShoppingCartList {
   renderCart(shoppingCartList) {
     let template = [];
 
-    shoppingCartList.purchaseList.forEach((product) => {
-      template += shoppingCartTemplate(product);
-    })
-    template += `<tr class="subtotal">
-    <td ></td>
-    <td></td>
-    <td></td>
-    <td><strong>Subtotal</strong></td>
-    <td id="subtotal"></td>
-  </tr>`
-    renderWithTemplate(template, shoppingCartList.cartElement);
-    this.activateDeleteButtons();
+    if (!shoppingCartList.purchaseList) {
+      document.emptyCartEL.classList.add("hide");
+    } else {
+      shoppingCartList.purchaseList.forEach((product) => {
+        template += shoppingCartTemplate(product);
+      })
+      template += `<tr class="subtotal">
+      <td ></td>
+      <td></td>
+      <td></td>
+      <td><strong>Subtotal</strong></td>
+      <td id="subtotal"></td>
+    </tr>`
+      renderWithTemplate(template, shoppingCartList.cartElement);
+      this.activateDeleteButtons();
+    }
   }
 
   activateDeleteButtons() {
@@ -92,7 +96,6 @@ export default class ShoppingCartList {
   }
 
   async init() {
-
     this.renderCart(this);
     renderTotalPrice(this.purchaseList);
   }
