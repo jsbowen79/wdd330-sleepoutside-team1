@@ -257,9 +257,11 @@ button.checkout {
 
 /* Styles for product lists */
 .product-card {
+  position: relative;
   flex: 1 1 45%;
   margin: 0.25em;
   padding: 0.5em;
+  height: 415px;
   border: 1px solid var(--light-grey);
   max-width: 250px;
   position: relative;
@@ -280,10 +282,10 @@ button.checkout {
   font-size: 1em;
 }
 
-.openView{
-  position:absolute; 
-  bottom: 15px;
-  left: 30px; 
+.openView {
+  position: absolute;
+  bottom: 10px;
+  left: 28px;
 }
 
 .openView:hover, .closeView:hover {
