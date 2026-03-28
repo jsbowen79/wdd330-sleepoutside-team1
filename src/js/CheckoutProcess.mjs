@@ -111,6 +111,7 @@ export default class CheckoutProcess {
     }
 
     checkForValidation() {
+        // I just created this three as a way to try the function, but if we keep this, I will created one for each single parameter of the form
         const cardNumber = document.getElementById("ccnum");
         const expDate = document.getElementById("expire");
         const ccvCode = document.getElementById("code");
