@@ -258,6 +258,8 @@ button.checkout {
   padding: 0.5em;
   border: 1px solid var(--light-grey);
   max-width: 250px;
+  position: relative;
+  height: 410px; 
 }
 
 .product-card h2,
@@ -272,6 +274,12 @@ button.checkout {
 
 .card__name {
   font-size: 1em;
+}
+
+.openView{
+  position:absolute; 
+  bottom: 15px;
+  left: 30px; 
 }
 
 .openView:hover, .closeView:hover {
