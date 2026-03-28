@@ -1,4 +1,4 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { alertMessage, loadHeaderFooter } from "./utils.mjs";
 import CheckoutProcess from "./CheckoutProcess.mjs";
 
 loadHeaderFooter();
@@ -16,6 +16,7 @@ sendPurchaseEl.addEventListener("click", (e) => {
     checkout.createOrder();
   } else {
     form.reportValidity();
+    checkout.checkForValidation();
   }
 });
 

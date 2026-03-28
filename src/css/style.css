@@ -216,7 +216,7 @@ button {
 
     border-collapse: collapse;
     border-spacing: 0 10px;
-    margin: 5px;
+    margin: 5px auto;
     .subtotal td,
     tr.subtotal {
       border-top: 2px double red;
@@ -257,11 +257,15 @@ button.checkout {
 
 /* Styles for product lists */
 .product-card {
+  position: relative;
   flex: 1 1 45%;
   margin: 0.25em;
   padding: 0.5em;
+  height: 415px;
   border: 1px solid var(--light-grey);
   max-width: 250px;
+  position: relative;
+  height: 410px; 
 }
 
 .product-card h2,
@@ -276,6 +280,34 @@ button.checkout {
 
 .card__name {
   font-size: 1em;
+}
+
+.openView {
+  position: absolute;
+  bottom: 10px;
+  left: 28px;
+}
+
+.openView:hover, .closeView:hover {
+  background-color: #3b4206;
+}
+
+/* Quick product view */
+.view {
+  margin: auto;
+  padding: 1rem;
+}
+
+.view img {
+  float: left;
+}
+
+.view img, .view .card__name {
+  margin-top: 1rem;
+}
+
+.view .available {
+  text-align: center;
 }
 
 /* End product list card */

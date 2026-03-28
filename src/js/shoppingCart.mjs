@@ -135,7 +135,6 @@ export default class ShoppingCartList {
   
 
   async init() {
-
     this.renderCart(this);
     renderTotalPrice(this.purchaseList);
   }
