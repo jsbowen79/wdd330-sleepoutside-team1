@@ -2,7 +2,7 @@ import { renderWithTemplate } from "./utils.mjs";
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 function shoppingCartTemplate(product) {
-  return `<tr>
+  return `<tr data-id="${product.Id}" data-name="${product.Name}">
     <td>
     <a href='/product_pages/?Id=${product.Id}' class='cart-card__image'>
       <img
@@ -15,7 +15,11 @@ function shoppingCartTemplate(product) {
       <h2 class='card__name'>${product.Name}</h2>
     </a></td>
     <td><p class='cart-card__color'>${product.Colors[0].ColorName}</p></td>
-    <td><p class='cart-card__quantity'>${product.Quantity}</p></td>
+    <td class="buttonContainer">
+    <span class="addItem">+</span>
+    <p class='cart-card__quantity'>${product.Quantity}</p>
+    <span class="subtractItem">-</span>
+    </td>
     <td><p class='cart-card__price'>$${(product.FinalPrice * product.Quantity).toFixed(2)}</p></td>
     
     <td class="deleteButton" id=${product.Id}>❌</td>
@@ -55,6 +59,7 @@ export default class ShoppingCartList {
   constructor(purchaseList, cartElement) {
     this.purchaseList = purchaseList;
     this.cartElement = cartElement;
+    this.activateEvents();
   }
 
   renderCart(shoppingCartList) {
@@ -69,32 +74,71 @@ export default class ShoppingCartList {
     <td></td>
     <td><strong>Subtotal</strong></td>
     <td id="subtotal"></td>
-  </tr>`
+    </tr>`;
     renderWithTemplate(template, shoppingCartList.cartElement);
-    this.activateDeleteButtons();
   }
 
-  activateDeleteButtons() {
-    const productListEL = document.querySelector('.cartTBody');
-    const deleteELNodes = document.querySelectorAll('.deleteButton');
-    deleteELNodes.forEach((node) => {
-      node.addEventListener('click', () => {
-        const id = node.id;
-        const shoppingCartList = getLocalStorage('so-cart');
-        const newList = shoppingCartList.filter(product => product.Id !== id);
-        setLocalStorage('so-cart', newList);
-        const newShoppingCartList = new ShoppingCartList(newList, productListEL); 
-        productListEL.innerHTML = ""; 
-        newShoppingCartList.init();
-      })
+
+
+
+  activateEvents() {
+    const tableEL = document.querySelector('#cartTable'); 
+    console.log(this); 
+    tableEL.addEventListener("click", (e) => {
+      const row = e.target.closest("tr"); 
+      if (!row) return; 
+
+      const productId = row.dataset.id; 
+
+      if (e.target.classList.contains("addItem")) {
+        this.updateQuantity(productId, 1); 
+      }
+
+      if (e.target.classList.contains("subtractItem")) {
+        this.updateQuantity(productId, -1)
+      }
+
+      if (e.target.classList.contains("deleteButton")) {
+        this.removeItem(productId)
+      }
     })
-
   }
+
+  updateQuantity(productId, change) {
+    let shoppingList = this.purchaseList;
+    let empty = null;
+
+    shoppingList.forEach((product) => {
+      if (product.Id == productId) {
+        Number(product.Quantity += change);
+        if (product.Quantity == 0) {
+          empty = product.Id;
+        }
+      }
+    });
+    if (empty) {
+      shoppingList = shoppingList.filter( item => item.Id !== empty )
+      renderTotalPrice(shoppingList); 
+    }
+    setLocalStorage("so-cart", shoppingList); 
+    this.cartElement.innerHTML = ""; 
+    this.init();
+  }
+
+  removeItem(productId) {
+    this.purchaseList = this.purchaseList.filter(
+      item => item.Id !== productId); 
+    setLocalStorage("so-cart", this.purchaseList); 
+      this.cartElement.innerHTML = ""; 
+      this.init(); 
+    }
+  
 
   async init() {
 
     this.renderCart(this);
     renderTotalPrice(this.purchaseList);
   }
-
 }
+
+
