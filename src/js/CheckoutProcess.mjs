@@ -103,7 +103,7 @@ export default class CheckoutProcess {
         const service = new ExternalServices();
         try {
             const result = await service.submitOrder(order);
-            window.location.href = '../success.html';
+            window.location.href = '/success/index.html ';
             console.log('result= ' + result)
         } catch (err) {
             alertMessage(err.message);
