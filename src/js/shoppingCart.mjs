@@ -117,12 +117,15 @@ export default class ShoppingCartList {
       }
     });
     if (empty) {
-      shoppingList = shoppingList.filter( item => item.Id !== empty )
-      renderTotalPrice(shoppingList); 
+      this.removeItem(empty);
+      // shoppingList = shoppingList.filter(item => item.Id !== empty)
+      // setLocalStorage("so-cart", shoppingList); 
+      // renderTotalPrice(shoppingList); 
+    } else {
+      setLocalStorage("so-cart", shoppingList);
+      this.cartElement.innerHTML = "";
+      this.init();
     }
-    setLocalStorage("so-cart", shoppingList); 
-    this.cartElement.innerHTML = ""; 
-    this.init();
   }
 
   removeItem(productId) {
