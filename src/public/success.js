@@ -1,5 +1,5 @@
-import { loadHeaderFooter, setLocalStorage } from "./utils.mjs";
-import CheckoutProcess from "./CheckoutProcess.mjs";
+import { loadHeaderFooter, setLocalStorage } from "../js/utils.mjs";
+import CheckoutProcess from "../js/CheckoutProcess.mjs";
 
 const checkout = new CheckoutProcess();
 checkout.displayOrderSummary();
