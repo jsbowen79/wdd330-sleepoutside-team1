@@ -209,11 +209,10 @@ button {
 }
 
 #products {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  margin: 0 auto; 
+  margin: 0 auto;
   table {
-
     border-collapse: collapse;
     border-spacing: 0 10px;
     margin: 5px auto;
@@ -265,7 +264,7 @@ button.checkout {
   border: 1px solid var(--light-grey);
   max-width: 250px;
   position: relative;
-  height: 410px; 
+  height: 410px;
 }
 
 .product-card h2,
@@ -288,7 +287,8 @@ button.checkout {
   left: 28px;
 }
 
-.openView:hover, .closeView:hover {
+.openView:hover,
+.closeView:hover {
   background-color: #3b4206;
 }
 
@@ -302,7 +302,8 @@ button.checkout {
   float: left;
 }
 
-.view img, .view .card__name {
+.view img,
+.view .card__name {
   margin-top: 1rem;
 }
 
@@ -359,14 +360,14 @@ button.checkout {
   grid-row: 2;
   grid-column: 3;
 }
-.cartTBody tr{
-  height: 97px; 
+.cartTBody tr {
+  height: 97px;
 }
-.buttonContainer{
+.buttonContainer {
   /* display: flex; 
   flex-direction: row;  */
 
-  span{
+  span {
     font-size: 28px;
     padding-left: 10px;
   }
