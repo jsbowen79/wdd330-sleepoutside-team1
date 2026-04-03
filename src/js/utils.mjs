@@ -63,4 +63,34 @@ export async function loadHeaderFooter() {
 }
 
 
+// WishList
+
+const WISHLIST_KEY = "so-wishlist";
+
+export function getWishlist() {
+  return getLocalStorage(WISHLIST_KEY) || [];
+}
+
+export function saveWishlist(items) {
+  setLocalStorage(WISHLIST_KEY, items);
+}
+
+export function addToWishlist(product) {
+  const wishlist = getWishlist();
+  const exists = wishlist.find((item) => item.Id === product.Id);
+
+  if (!exists) {
+    wishlist.push(product);
+    saveWishlist(wishlist);
+  }
+}
+
+export function removeFromWishlist(productId) {
+  const wishlist = getWishlist().filter((item) => item.Id !== productId);
+  saveWishlist(wishlist);
+}
+
+export function isInWishlist(productId) {
+  return getWishlist().some((item) => item.Id === productId);
+}
 

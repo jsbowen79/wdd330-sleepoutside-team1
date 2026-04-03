@@ -266,6 +266,18 @@ button {
   display: block;
 }
 
+.remove-wishlist {
+  margin-top: 0.75rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid #333;
+  background: #fff;
+  cursor: pointer;
+}
+
+.remove-wishlist:hover {
+  background: #f4f4f4;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;

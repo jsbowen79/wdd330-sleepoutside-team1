@@ -1,4 +1,9 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  addToWishlist,
+  isInWishlist,
+} from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -14,12 +19,35 @@ export default class ProductDetails {
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
+
+    document
+      .getElementById("addToWishlist")
+      .addEventListener("click", this.addToWishlistHandler.bind(this));
+
+    this.updateWishlistButton();
   }
 
   addToCart() {
     let productsArray = getLocalStorage("so-cart") || [];
     productsArray.push(this.product);
     setLocalStorage("so-cart", productsArray);
+  }
+
+  addToWishlistHandler() {
+    addToWishlist(this.product);
+    this.updateWishlistButton();
+  }
+
+  updateWishlistButton() {
+    const wishlistButton = document.getElementById("addToWishlist");
+
+    if (isInWishlist(this.product.Id)) {
+      wishlistButton.textContent = "Added to Wishlist";
+      wishlistButton.disabled = true;
+    } else {
+      wishlistButton.textContent = "Add to Wishlist";
+      wishlistButton.disabled = false;
+    }
   }
 
   renderProductDetails() {
@@ -41,6 +69,7 @@ export default class ProductDetails {
         </p>
         <div class="product-detail__add">
           <button id="addToCart">Add to Cart</button>
+          <button id="addToWishlist">Add to Wishlist</button>
         </div>
       </div>
     `;
