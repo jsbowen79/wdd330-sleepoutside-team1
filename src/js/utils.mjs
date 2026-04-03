@@ -15,11 +15,11 @@ export function setLocalStorage(key, data) {
 }
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
-  qs(selector).addEventListener('touchend', (event) => {
+  qs(selector).addEventListener("touchend", (event) => {
     event.preventDefault();
     callback();
   });
-  qs(selector).addEventListener('click', callback);
+  qs(selector).addEventListener("click", callback);
 }
 
 //retrieve parameters from URL
@@ -36,7 +36,7 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
   if (clear == true) {
     parentElement.innerHTML = "";
   }
-  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
 export function renderWithTemplate(template, parentElement, data = null, callback = null) {
@@ -53,8 +53,8 @@ async function loadTemplate(filename) {
 }
 
 export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate('header.html'); 
-  const footerTemplate = await loadTemplate('footer.html');
+  const headerTemplate = await loadTemplate("header.html"); 
+  const footerTemplate = await loadTemplate("footer.html");
   
   const headerEL = document.querySelector("#mainHeader"); 
   const footerEL = document.querySelector("#mainFooter"); 
