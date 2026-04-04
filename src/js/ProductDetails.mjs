@@ -8,23 +8,41 @@ import {
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
-    this.product = {};
+    this.product = null;
     this.dataSource = dataSource;
   }
 
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+
+    if (!this.product) {
+      const productSection = document.querySelector(".product-detail");
+      const breadcrumb = document.getElementById("productBreadcrumb");
+
+      if (breadcrumb) {
+        breadcrumb.textContent = "Product";
+      }
+
+      if (productSection) {
+        productSection.innerHTML = `<p>Product not found.</p>`;
+      }
+      return;
+    }
+
     this.renderProductDetails();
 
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
 
-    document
-      .getElementById("addToWishlist")
-      .addEventListener("click", this.addToWishlistHandler.bind(this));
-
-    this.updateWishlistButton();
+    const wishlistButton = document.getElementById("addToWishlist");
+    if (wishlistButton) {
+      wishlistButton.addEventListener(
+        "click",
+        this.addToWishlistHandler.bind(this)
+      );
+      this.updateWishlistButton();
+    }
   }
 
   addToCart() {
@@ -41,6 +59,8 @@ export default class ProductDetails {
   updateWishlistButton() {
     const wishlistButton = document.getElementById("addToWishlist");
 
+    if (!wishlistButton || !this.product) return;
+
     if (isInWishlist(this.product.Id)) {
       wishlistButton.textContent = "Added to Wishlist";
       wishlistButton.disabled = true;
@@ -52,20 +72,26 @@ export default class ProductDetails {
 
   renderProductDetails() {
     const productSection = document.querySelector(".product-detail");
+    const breadcrumb = document.getElementById("productBreadcrumb");
+
+    if (breadcrumb) {
+      breadcrumb.textContent =
+        this.product.NameWithoutBrand || this.product.Name || "Product";
+    }
 
     productSection.innerHTML = `
       <img
         class="divider"
-        src="${this.product.Image}"
-        alt="${this.product.Name}"
+        src="${this.product.Image || ""}"
+        alt="${this.product.Name || "Product image"}"
       />
       <div>
-        <h3>${this.product.Brand.Name}</h3>
-        <h2>${this.product.NameWithoutBrand}</h2>
-        <p class="product-card__price">$${this.product.FinalPrice}</p>
-        <p class="product__color">${this.product.Colors[0].ColorName}</p>
+        <h3>${this.product.Brand?.Name || ""}</h3>
+        <h2>${this.product.NameWithoutBrand || this.product.Name || ""}</h2>
+        <p class="product-card__price">$${this.product.FinalPrice || ""}</p>
+        <p class="product__color">${this.product.Colors?.[0]?.ColorName || ""}</p>
         <p class="product__description">
-          ${this.product.DescriptionHtmlSimple}
+          ${this.product.DescriptionHtmlSimple || ""}
         </p>
         <div class="product-detail__add">
           <button id="addToCart">Add to Cart</button>
